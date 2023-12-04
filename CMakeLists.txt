@@ -15,8 +15,30 @@ set(BUILD_EXAMPLES OFF CACHE INTERNAL "")
 FetchContent_MakeAvailable(raylib)
 
 # Our project
-set(SOURCE_FILES main.cpp)
-add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+# set(SOURCE_FILES main.cpp)
+add_executable(${PROJECT_NAME})
+
+# `target_sources` adds source files to a target. We pass the target that needs the sources as the
+# first argument, then a visibility parameter for the sources which should normally be PRIVATE.
+# Finally, we supply a list of source files that will be built into the target. This is a standard
+# CMake command.
+set(INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")
+set(SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/source")
+
+target_sources(${PROJECT_NAME}
+    PRIVATE
+        main.cpp
+        ${SOURCE_DIR}/player.cpp
+        ${INCLUDE_DIR}/player.h
+)
+
+# Sets the include directories of the plugin project.
+target_include_directories(${PROJECT_NAME}
+    PUBLIC
+        ${INCLUDE_DIR}
+)
+
+
 target_link_libraries(${PROJECT_NAME} raylib) # Link the raylib library to our project
 
 # Checks if OSX and links appropriate frameworks

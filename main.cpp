@@ -1,21 +1,29 @@
 #include "raylib.h"
+#include "player.h"
 
 int main()
 {
+    int width = 800;
+    int height = 450;
 
-    const int screenWidth = 800;
-    const int screenHeight = 450;
-    const char *windowTitle = "Hello, World!";
-    InitWindow(screenWidth, screenHeight, windowTitle);
+    Player player(width / 2, height / 2, 25); // (posX, posY, radius
 
-    // The following only works after InitWindow is called
+    int movementSpeed = 4;
+
+    SetConfigFlags(FLAG_MSAA_4X_HINT);
+    InitWindow(width, height, "Axe Game");
     SetTargetFPS(60);
 
     while (!WindowShouldClose())
     {
+
         BeginDrawing();
-        ClearBackground(RAYWHITE);
-        DrawText("Hello, World!", 190, 200, 20, LIGHTGRAY);
+
+        ClearBackground(LIGHTGRAY); // avoid flickering while double buffering
+
+        player.move(&width, &height, &movementSpeed);
+
+        DrawText("Axe Game", 10, 10, 20, BLACK);
         EndDrawing();
     }
 
