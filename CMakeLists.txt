@@ -30,6 +30,7 @@ target_sources(${PROJECT_NAME}
         main.cpp
         ${SOURCE_DIR}/player.cpp
         ${INCLUDE_DIR}/player.h
+        ${INCLUDE_DIR}/move-keys.h
 )
 
 # Sets the include directories of the plugin project.

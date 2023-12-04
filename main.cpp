@@ -1,12 +1,17 @@
 #include "raylib.h"
 #include "player.h"
+#include "move-keys.h"
 
 int main()
 {
     int width = 800;
     int height = 450;
 
-    Player player(width / 2, height / 2, 25); // (posX, posY, radius
+    Player playerA(width / 2, height / 2, 25, RED); // posX, posY, radius, color
+    MoveKeys playerA_keys = {KEY_W, KEY_S, KEY_A, KEY_D};
+
+    Player playerB(width / 3, height / 3, 35, BLUE);
+    MoveKeys playerB_keys = {KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT};
 
     int movementSpeed = 4;
 
@@ -21,7 +26,8 @@ int main()
 
         ClearBackground(LIGHTGRAY); // avoid flickering while double buffering
 
-        player.move(&width, &height, &movementSpeed);
+        playerA.move(&width, &height, &movementSpeed, &playerA_keys);
+        playerB.move(&width, &height, &movementSpeed, &playerB_keys);
 
         DrawText("Axe Game", 10, 10, 20, BLACK);
         EndDrawing();
