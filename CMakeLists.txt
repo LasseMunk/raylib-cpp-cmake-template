@@ -31,6 +31,8 @@ target_sources(${PROJECT_NAME}
         ${SOURCE_DIR}/player.cpp
         ${INCLUDE_DIR}/player.h
         ${INCLUDE_DIR}/move-keys.h
+        ${INCLUDE_DIR}/axe-game-types.h
+        ${INCLUDE_DIR}/axe-game-utils.h
 )
 
 # Sets the include directories of the plugin project.

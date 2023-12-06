@@ -9,47 +9,48 @@ int main()
     int width = 800;
     int height = 450;
 
-    int playerA_x = width / 2;
-    int playerA_y = height / 2;
-    int playerA_radius = 25;
-    Player playerA(playerA_radius, RED); // radius, color
+    Circle A = {static_cast<int>(width / 0.5), static_cast<int>(height * 0.5), 25, RED};
+    // Circle A = {static_cast<int>(width / 0.5), height * 0.5, 25, RED};
     MoveKeys playerA_keys = {KEY_W, KEY_S, KEY_A, KEY_D};
 
-    int playerB_x = width / 3;
-    int playerB_y = height / 3;
-    int playerB_radius = 35;
-    Player playerB(playerB_radius, BLUE);
+    Circle B = {static_cast<int>(width * 0.5), static_cast<int>(height * 0.5), 35, BLUE};
     MoveKeys playerB_keys = {KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT};
 
-    int movementSpeed = 4;
+    float movementSpeed = 500.0f; // pixels pr. second
 
     char textToDraw[50] = "Axe Game";
 
-    SetConfigFlags(FLAG_MSAA_4X_HINT);
+    SetConfigFlags(FLAG_MSAA_4X_HINT | FLAG_VSYNC_HINT);
     InitWindow(width, height, "Axe Game");
     SetTargetFPS(60);
 
+    // TODO: Update player movement to deltaTime for smoother movement
+
+    float deltatime;
+
     while (!WindowShouldClose())
     {
+        deltatime = GetFrameTime();
 
         BeginDrawing();
 
         ClearBackground(LIGHTGRAY); // avoid flickering while double buffering
 
-        playerA.draw(&width, &height, &playerA_x, &playerA_y, &movementSpeed, &playerA_keys);
-        playerB.draw(&width, &height, &playerB_x, &playerB_y, &movementSpeed, &playerB_keys);
+        Player::draw(width, height, A, movementSpeed * deltatime, playerA_keys);
+        Player::draw(width, height, B, movementSpeed * deltatime, playerB_keys);
 
-        collisionDetection(&playerA_x, &playerA_y, &playerA_radius, &playerB_x, &playerB_y, &playerB_radius, textToDraw);
+        if (circlesCollide(A, B))
+        {
+            DrawText("COLLISION", 10, 10, 20, BLACK);
+        }
+        else
+        {
+            DrawText("AXE GAME", 10, 10, 20, BLACK);
+        }
 
-        DrawText(textToDraw, 10, 10, 20, BLACK);
         EndDrawing();
     }
 
     // Clean up
     CloseWindow();
 }
-
-// Collision detection
-// circle bounding box is circle_y - circle_radius, circle_y + circle_radius, circle_x - circle_radius, circle_x + circle_radius
-// does it collide with point at x300:
-// circle_y + circle_radius >= 300

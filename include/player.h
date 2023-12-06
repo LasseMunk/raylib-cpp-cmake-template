@@ -1,15 +1,10 @@
 #pragma once
 #include "raylib.h"
 #include "move-keys.h"
+#include "axe-game-types.h"
 
 class Player
 {
 public:
-    Player(int radius, Color color);
-
-    void draw(int *width, int *height, int *posX, int *posY, int *movementSpeed, MoveKeys *moveKeys);
-
-private:
-    Color color;
-    int radius;
+    static void draw(const int &screenW, const int &screenH, Circle &circle, const float &movementSpeed, const MoveKeys &moveKeys);
 };

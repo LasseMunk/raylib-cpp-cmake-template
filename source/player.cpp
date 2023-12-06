@@ -1,37 +1,31 @@
 #include "player.h"
 
-Player::Player(int radius, Color color)
+void Player::draw(const int &screenW, const int &screenH, Circle &circle, const float &movementSpeed, const MoveKeys &moveKeys)
 {
-    this->radius = radius;
-    this->color = color;
-}
-
-void Player::draw(int *width, int *height, int *posX, int *posY, int *movementSpeed, MoveKeys *moveKeys)
-{
-    if (IsKeyDown(moveKeys->up))
+    if (IsKeyDown(moveKeys.up))
     {
-        *posY -= *movementSpeed;
-        if (*posY < 0 - this->radius)
-            *posY = *height + this->radius;
+        circle.y -= movementSpeed;
+        if (circle.y < 0 - circle.radius)
+            circle.y = screenH + circle.radius;
     }
-    if (IsKeyDown(moveKeys->down))
+    if (IsKeyDown(moveKeys.down))
     {
-        *posY += *movementSpeed;
-        if (*posY > *height + this->radius)
-            *posY = 0 - this->radius;
+        circle.y += movementSpeed;
+        if (circle.y > screenH + circle.radius)
+            circle.y = 0 - circle.radius;
     }
-    if (IsKeyDown(moveKeys->left))
+    if (IsKeyDown(moveKeys.left))
     {
-        *posX -= *movementSpeed;
-        if (*posX < 0 - this->radius)
-            *posX = *width + this->radius;
+        circle.x -= movementSpeed;
+        if (circle.x < 0 - circle.radius)
+            circle.x = screenW + circle.radius;
     }
-    if (IsKeyDown(moveKeys->right))
+    if (IsKeyDown(moveKeys.right))
     {
-        *posX += *movementSpeed;
-        if (*posX > *width + this->radius)
-            *posX = 0 - this->radius;
+        circle.x += movementSpeed;
+        if (circle.x > screenW + circle.radius)
+            circle.x = 0 - circle.radius;
     }
 
-    DrawCircle(*posX, *posY, this->radius, this->color);
+    DrawCircle(circle.x, circle.y, circle.radius, circle.color);
 }
